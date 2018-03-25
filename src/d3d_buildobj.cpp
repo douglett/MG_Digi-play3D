@@ -56,4 +56,8 @@ namespace d3d {
 		return obj;
 	}
 	
+	int intersects(const Obj& a, const Obj& b) {
+		return 0;
+	}
+	
 } // end d3d

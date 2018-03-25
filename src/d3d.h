@@ -25,4 +25,5 @@ namespace d3d {
 	// buildobj
 	void scale(Obj& obj, float scalef);
 	Obj  makecube();
+	int  intersects(const Obj& a, const Obj& b);
 } // end d3d
