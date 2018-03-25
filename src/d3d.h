@@ -12,15 +12,17 @@ namespace d3d {
 		std::string id;
 		gvec4 col;
 		std::list<gquad> quads;
-		float roll, pitch, yaw;
+		float x, y, z, roll, pitch, yaw;
 		std::list<Obj> children;
 	};
-	// members
+	// main
 	extern Obj scene;
-	// methods
 	int init();
 	int quit();
 	int flip();
 	int setPerspective(const std::string& perspective);
 	int paint();
+	// buildobj
+	void scale(Obj& obj, float scalef);
+	Obj  makecube();
 } // end d3d

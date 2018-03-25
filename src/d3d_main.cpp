@@ -83,7 +83,7 @@ namespace d3d {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();  // clear matrix stack
 		// repaint ui objects
-		setPerspective("2d");
+		//setPerspective("2d");
 		//paintsquares();
 		// reset cam
 		setPerspective("3d");
@@ -93,7 +93,6 @@ namespace d3d {
 		// repaint 3d objects
 		glPushMatrix();
 			paintobj(scene);
-			//paintobjs(objlist);
 			//if (showcam)  paintobjs(camlist);
 		glPopMatrix();
 		// flip
@@ -102,18 +101,24 @@ namespace d3d {
 	
 	static int paintobj(const Obj& obj) {
 		glPushMatrix();
-			glRotatef( obj.roll,    0, 0,-1 );
-			glRotatef( obj.pitch,  -1, 0, 0 );
-			glRotatef( obj.yaw,     0,-1, 0 );
-			glColor4f ( 1.0, 0, 0, 1.0 );
+			// set initial vars
+			glColor4f    ( obj.col.x, obj.col.y, obj.col.z, obj.col.a );
+			glTranslatef ( obj.x, obj.y, obj.z );
+			glRotatef    ( obj.roll,    0, 0,-1 );
+			glRotatef    ( obj.pitch,  -1, 0, 0 );
+			glRotatef    ( obj.yaw,     0,-1, 0 );
+			// draw all quads
 			glBegin(GL_QUADS);
 				for (const auto& q : obj.quads) {
-					glVertex3f( q[0],  q[1],  q[2] );
-					glVertex3f( q[3],  q[4],  q[5] );
-					glVertex3f( q[6],  q[7],  q[8] );
+					glVertex3f( q[0],  q[1],  q[2]  );
+					glVertex3f( q[3],  q[4],  q[5]  );
+					glVertex3f( q[6],  q[7],  q[8]  );
 					glVertex3f( q[9],  q[10], q[11] );
 				}
 			glEnd();
+			// draw all children
+			for (const auto& c : obj.children)
+				paintobj( c );
 		glPopMatrix();
 		return 0;
 	}

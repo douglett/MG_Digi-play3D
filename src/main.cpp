@@ -17,6 +17,10 @@ int main(int argc, char** argv) {
 			-0.5,  0.5, -3
 		}}
 	};
+	auto cube = d3d::makecube();
+	cube.z = -2;
+	d3d::scale(cube, 0.3);
+	d3d::scene.children.push_back( cube );
 	
 	int running = 1;
 	while (running) {
@@ -27,6 +31,7 @@ int main(int argc, char** argv) {
 		}
 		d3d::paint();
 		d3d::scene.roll += 0.01;
+		d3d::scene.children.begin()->pitch += 0.01;
 	}
 	
 	d3d::quit();

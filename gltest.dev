@@ -1,6 +1,6 @@
 [Project]
 FileName=gltest.dev
-Name=gltest
+Name=digiplay3d
 Type=1
 Ver=2
 ObjFiles=
@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=3
 CompilerSettings=0000000100000000000000000
-UnitCount=3
+UnitCount=5
 
 [VersionInfo]
 Major=1
@@ -72,6 +72,26 @@ BuildCmd=
 
 [Unit3]
 FileName=src\d3d_main.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit4]
+FileName=src\d3d_buildobj.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit5]
+FileName=src\d3d_texture.cpp
 CompileCpp=1
 Folder=
 Compile=1
