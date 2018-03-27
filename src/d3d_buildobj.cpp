@@ -4,16 +4,15 @@ using namespace std;
 
 namespace d3d {
 
-	void scale(Obj& obj, float scalef) {
-		for (auto& q : obj.quads)
+	void scale(std::list<gquad>& quads, float scalef) {
+		for (auto& q : quads)
 		for (auto& p : q)
 			p *= scalef;
-		for (auto& c : obj.children)
-			scale(c, scalef);
 	}
 
 	Obj makecube() {
-		Obj obj = { .id = "cube", .col = {1.0, 1.0, 1.0, 1.0} };
+		Obj obj;
+		obj.id = "cube", obj.col = {1.0, 1.0, 1.0, 1.0};
 		obj.quads = {
 			{ // front
 			-1, -1, 1,
@@ -52,7 +51,7 @@ namespace d3d {
 			 1, -1, -1,
 			}
 		};
-		scale(obj, 0.5);
+		scale(obj.quads, 0.5);
 		return obj;
 	}
 	

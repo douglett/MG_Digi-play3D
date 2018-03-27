@@ -1,7 +1,7 @@
 #include <SDL2/SDL.h>
 #include <string>
-#include <list>
 #include <array>
+#include <list>
 
 namespace d3d {
 	// types
@@ -10,9 +10,9 @@ namespace d3d {
 	typedef  std::array<float,12>  gquad;
 	struct Obj {
 		std::string id;
-		gvec4 col;
+		float x=0, y=0, z=0, roll=0, pitch=0, yaw=0, scale=1;
+		gvec4 col={ 1.0, 1.0, 1.0, 1.0 };
 		std::list<gquad> quads;
-		float x, y, z, roll, pitch, yaw;
 		std::list<Obj> children;
 	};
 	// main
@@ -23,7 +23,7 @@ namespace d3d {
 	int setPerspective(const std::string& perspective);
 	int paint();
 	// buildobj
-	void scale(Obj& obj, float scalef);
+	void scale(std::list<gquad>& quads, float scalef);
 	Obj  makecube();
 	int  intersects(const Obj& a, const Obj& b);
 } // end d3d

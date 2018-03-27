@@ -6,21 +6,22 @@ int main(int argc, char** argv) {
 	printf("hello world\n");
 	if (d3d::init())  return 1;
 	
-	// test scene
-	d3d::scene = d3d::Obj{
-		.id = "test",
-		.col = { 1.0, 0, 0, 1.0 },
-		.quads = {{
+	{  // make test scene
+		auto& obj = d3d::scene;
+		obj = d3d::Obj();
+		obj.id = "test", obj.col = { 1.0, 0, 0, 1.0 };
+		obj.quads = {{
 			-0.5, -0.5, -3,
 			 0.5, -0.5, -3,
 			 0.5,  0.5, -3,
 			-0.5,  0.5, -3
-		}}
-	};
-	auto cube = d3d::makecube();
-	cube.z = -2;
-	d3d::scale(cube, 0.3);
-	d3d::scene.children.push_back( cube );
+		}};
+		auto cube = d3d::makecube();
+		cube.z = -2;
+		//d3d::scale(cube, 0.3);
+		cube.scale = 0.3;
+		obj.children.push_back( cube );
+	}
 	
 	int running = 1;
 	while (running) {

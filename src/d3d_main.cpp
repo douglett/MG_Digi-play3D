@@ -104,6 +104,7 @@ namespace d3d {
 			// set initial vars
 			glColor4f    ( obj.col.x, obj.col.y, obj.col.z, obj.col.a );
 			glTranslatef ( obj.x, obj.y, obj.z );
+			glScalef     ( obj.scale, obj.scale, obj.scale );
 			glRotatef    ( obj.roll,    0, 0,-1 );
 			glRotatef    ( obj.pitch,  -1, 0, 0 );
 			glRotatef    ( obj.yaw,     0,-1, 0 );
