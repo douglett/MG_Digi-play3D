@@ -38,6 +38,7 @@ namespace d3d {
 		glEnable(GL_TEXTURE_2D);  // allow textures
 		// set some defaults
 		glClearColor(0.0, 0.0, 0.0, 1.0);
+		glShadeModel(GL_SMOOTH);
 		// simple opengl error checking
 		GLenum error = glGetError();
 		if (error != GL_NO_ERROR) {
@@ -87,9 +88,9 @@ namespace d3d {
 		//paintsquares();
 		// reset cam
 		setPerspective("3d");
-		//glRotatef( cam->pitch,  -1, 0,0 );
-		//glRotatef( cam->yaw,     0,-1,0 );
 		//glTranslatef( -cam->x, -cam->y, -cam->z );
+		//glRotatef   ( cam->pitch,  -1, 0,0 );
+		//glRotatef   ( cam->yaw,     0,-1,0 );
 		// repaint 3d objects
 		glPushMatrix();
 			paintobj(scene);
@@ -122,6 +123,15 @@ namespace d3d {
 				paintobj( c );
 		glPopMatrix();
 		return 0;
+	}
+	
+	Obj* getbyid(Obj& root, const std::string& id) {
+		if (root.id == id)  return &root;
+		for (auto& c : root.children) {
+			Obj* r = getbyid(c, id);
+			if (r != NULL)  return r;
+		}
+		return NULL;
 	}
 	
 } // end d3d
