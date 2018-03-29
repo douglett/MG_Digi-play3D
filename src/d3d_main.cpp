@@ -46,6 +46,8 @@ namespace d3d {
 			//fprintf(stderr, "Error initialising OpenGL! %d\n", error);
 			return 1;
 		}
+		// setup default scene
+		scene.id = "scene";
 		//SDL_Delay(2000);		
 		return 0;
 	}
@@ -112,10 +114,10 @@ namespace d3d {
 			// draw all quads
 			glBegin(GL_QUADS);
 				for (const auto& q : obj.quads) {
-					glVertex3f( q[0],  q[1],  q[2]  );
-					glVertex3f( q[3],  q[4],  q[5]  );
-					glVertex3f( q[6],  q[7],  q[8]  );
-					glVertex3f( q[9],  q[10], q[11] );
+					glVertex3f( q[0].x,  q[0].y,  q[0].z );
+					glVertex3f( q[1].x,  q[1].y,  q[1].z );
+					glVertex3f( q[2].x,  q[2].y,  q[2].z );
+					glVertex3f( q[3].x,  q[3].y,  q[3].z );
 				}
 			glEnd();
 			// draw all children

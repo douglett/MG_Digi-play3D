@@ -7,7 +7,7 @@ namespace d3d {
 	// types
 	struct   gvec3 { float  x, y, z; };
 	struct   gvec4 { float  x, y, z, a; };
-	typedef  std::array<float,12>  gquad;
+	typedef  std::array<gvec3,4>  gquad;
 	struct Obj {
 		std::string id;
 		float x=0, y=0, z=0, roll=0, pitch=0, yaw=0, scale=1;
@@ -27,5 +27,6 @@ namespace d3d {
 	Obj  makecamera();
 	Obj  makecube();
 	void scale(std::list<gquad>& quads, float scalef);
+	void translate(std::list<gquad>& quads, float x, float y, float z);
 	int  intersects(const Obj& a, const Obj& b);
 } // end d3d
