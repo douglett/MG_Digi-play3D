@@ -24,9 +24,7 @@ int main(int argc, char** argv) {
 		obj.children.push_back( cube );
 		auto cam = d3d::makecamera();
 		cam.z = -1.5;
-		obj.children.push_back( cam );
-
-		
+		obj.children.push_back( cam );	
 	}
 	
 	int running = 1;
@@ -38,10 +36,8 @@ int main(int argc, char** argv) {
 		}
 		d3d::paint();
 		//d3d::scene.roll += 0.01;
-		for (d3d::Obj* obj = d3d::getbyid(d3d::scene, "cube"); obj!=NULL; obj=NULL)
+		for (auto* obj = d3d::getbyid(d3d::scene, "cube"); obj!=NULL; obj=NULL)
 			obj->pitch += 0.01;
-		if (d3d::getbyid(d3d::scene, "camera"))
-			d3d::getbyid(d3d::scene, "camera")->roll += 0.01;
 	}
 	
 	d3d::quit();

@@ -90,9 +90,12 @@ namespace d3d {
 		//paintsquares();
 		// reset cam
 		setPerspective("3d");
-		//glTranslatef( -cam->x, -cam->y, -cam->z );
-		//glRotatef   ( cam->pitch,  -1, 0,0 );
-		//glRotatef   ( cam->yaw,     0,-1,0 );
+		Obj* cam = getbyid(scene, "camera");
+		if (cam) {
+			glTranslatef( -cam->x, -cam->y, -cam->z );
+			glRotatef   ( cam->pitch,  -1, 0,0 );
+			glRotatef   ( cam->yaw,     0,-1,0 );
+		}
 		// repaint 3d objects
 		glPushMatrix();
 			paintobj(scene);
