@@ -17,6 +17,7 @@ namespace d3d {
 	};
 	// main
 	extern Obj scene;
+	extern std::string cameraid;
 	int  init();
 	int  quit();
 	int  flip();

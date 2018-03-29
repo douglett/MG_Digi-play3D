@@ -14,6 +14,7 @@ namespace d3d {
 	static SDL_Window* win = NULL;
 	static SDL_GLContext ctx;
 	Obj scene;
+	std::string cameraid = "camera";
 	
 	int init() {
 		// init sdl2
@@ -48,7 +49,7 @@ namespace d3d {
 		}
 		// setup default scene
 		scene.id = "scene";
-		//SDL_Delay(2000);		
+		//SDL_Delay(2000);
 		return 0;
 	}
 	
@@ -90,15 +91,19 @@ namespace d3d {
 		//paintsquares();
 		// reset cam
 		setPerspective("3d");
-		Obj* cam = getbyid(scene, "camera");
+		Obj* cam = getbyid(scene, cameraid);
+		//if (cam && getparent(cam) == &scene) {
 		if (cam) {
+			glRotatef   ( cam->roll,   0,0,-1 );
+			glRotatef   ( cam->pitch,  -1,0,0 );
+			glRotatef   ( cam->yaw,    0,-1,0 );
 			glTranslatef( -cam->x, -cam->y, -cam->z );
-			glRotatef   ( cam->pitch,  -1, 0,0 );
-			glRotatef   ( cam->yaw,     0,-1,0 );
 		}
 		// repaint 3d objects
 		glPushMatrix();
-			paintobj(scene);
+			//paintobj(scene);
+			for (const auto& c : scene.children)
+				paintobj( c );
 			//if (showcam)  paintobjs(camlist);
 		glPopMatrix();
 		// flip
@@ -108,12 +113,12 @@ namespace d3d {
 	static int paintobj(const Obj& obj) {
 		glPushMatrix();
 			// set initial vars
-			glColor4f    ( obj.col.x, obj.col.y, obj.col.z, obj.col.a );
 			glTranslatef ( obj.x, obj.y, obj.z );
+			glRotatef    ( obj.yaw,     0,1,0 ); // note: follows right hand rule (negative = clockwise)
+			glRotatef    ( obj.pitch,   1,0,0 );
+			glRotatef    ( obj.roll,    0,0,1 );
 			glScalef     ( obj.scale, obj.scale, obj.scale );
-			glRotatef    ( obj.roll,    0, 0,-1 );
-			glRotatef    ( obj.pitch,  -1, 0, 0 );
-			glRotatef    ( obj.yaw,     0,-1, 0 );
+			glColor4f    ( obj.col.x, obj.col.y, obj.col.z, obj.col.a );
 			// draw all quads
 			glBegin(GL_QUADS);
 				for (const auto& q : obj.quads) {
@@ -138,5 +143,15 @@ namespace d3d {
 		}
 		return NULL;
 	}
+	
+//	Obj* getparent(Obj& root, Obj* obj) {
+//		//if (obj == NULL || obj == &root)  return NULL;
+//		for (Obj& c : root.children) {
+//			if (&c == obj)  return &c;
+//			Obj* res = getparent(c, obj);
+//			if (res)  return res;
+//		}
+//		return NULL;
+//	}
 	
 } // end d3d
