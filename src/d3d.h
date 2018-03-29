@@ -17,13 +17,15 @@ namespace d3d {
 	};
 	// main
 	extern Obj scene;
-	int init();
-	int quit();
-	int flip();
-	int setPerspective(const std::string& perspective);
-	int paint();
+	int  init();
+	int  quit();
+	int  flip();
+	int  setPerspective(const std::string& perspective);
+	int  paint();
+	Obj* getbyid(Obj& root, const std::string& id);
 	// buildobj
-	void scale(std::list<gquad>& quads, float scalef);
+	Obj  makecamera();
 	Obj  makecube();
+	void scale(std::list<gquad>& quads, float scalef);
 	int  intersects(const Obj& a, const Obj& b);
 } // end d3d

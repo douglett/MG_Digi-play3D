@@ -18,9 +18,11 @@ int main(int argc, char** argv) {
 		}};
 		auto cube = d3d::makecube();
 		cube.z = -2;
-		//d3d::scale(cube, 0.3);
 		cube.scale = 0.3;
 		obj.children.push_back( cube );
+		auto cam = d3d::makecamera();
+		cam.z = -1.5;
+		obj.children.push_back(cam);
 	}
 	
 	int running = 1;
@@ -31,8 +33,9 @@ int main(int argc, char** argv) {
 			case SDL_QUIT:  running = 0;  break;
 		}
 		d3d::paint();
-		d3d::scene.roll += 0.01;
-		d3d::scene.children.begin()->pitch += 0.01;
+//		d3d::scene.roll += 0.01;
+//		d3d::scene.children.begin()->pitch += 0.01;
+		d3d::getbyid(d3d::scene, "camera")->pitch += 0.01;
 	}
 	
 	d3d::quit();
