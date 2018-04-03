@@ -48,7 +48,7 @@ namespace d3d {
 			return 1;
 		}
 		// setup default scene
-		scene.id = "scene";
+		clearscene();
 		//SDL_Delay(2000);
 		return 0;
 	}
@@ -60,6 +60,13 @@ namespace d3d {
 	
 	int flip() {
 		SDL_GL_SwapWindow(win);
+		return 0;
+	}
+	
+	int clearscene() {
+		scene = Obj();  // identity scene
+		scene.id = "scene";  // default name
+		cameraid = "camera";  // default camera
 		return 0;
 	}
 	
@@ -133,6 +140,10 @@ namespace d3d {
 				paintobj( c );
 		glPopMatrix();
 		return 0;
+	}
+	
+	Obj* getbyid(const std::string& id) {
+		return getbyid(scene, id);
 	}
 	
 	Obj* getbyid(Obj& root, const std::string& id) {

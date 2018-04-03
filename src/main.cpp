@@ -2,10 +2,23 @@
 #include <iostream>
 using namespace std;
 
+int testscene();
+int start_asteroids();
+
 int main(int argc, char** argv) {
 	printf("hello world\n");
 	if (d3d::init())  return 1;
 	
+	//testscene();
+	start_asteroids();
+	
+	d3d::quit();
+	return 0;
+}
+
+
+int testscene() {
+	d3d::clearscene();
 	{  // make test scene		
 		auto cube = d3d::makecube();
 		cube.col = {0, 1.0, 0, 1.0};
@@ -33,6 +46,7 @@ int main(int argc, char** argv) {
 				switch (e.key.keysym.sym) {
 					case SDLK_1:  d3d::cameraid = "camera";  break;
 					case SDLK_2:  d3d::cameraid = "camera2";  break;
+					case SDLK_3:  d3d::cameraid = "camera3";  break;
 				}
 				break;
 		}
@@ -48,6 +62,5 @@ int main(int argc, char** argv) {
 		}
 	}
 	
-	d3d::quit();
 	return 0;
 }

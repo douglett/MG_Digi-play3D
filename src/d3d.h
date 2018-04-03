@@ -1,3 +1,4 @@
+#pragma once
 #include <SDL2/SDL.h>
 #include <string>
 #include <array>
@@ -21,8 +22,10 @@ namespace d3d {
 	int  init();
 	int  quit();
 	int  flip();
+	int  clearscene();
 	int  setPerspective(const std::string& perspective);
 	int  paint();
+	Obj* getbyid(const std::string& id);
 	Obj* getbyid(Obj& root, const std::string& id);
 	// buildobj
 	Obj  makecamera();
