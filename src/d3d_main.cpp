@@ -10,7 +10,7 @@ namespace d3d {
 	static int paintobj(const Obj& obj);
 	
 	static const int  WIN_W = 512,  WIN_H = 512;
-	static const float FOV = 75.0;
+	static const float FOV = 70.0;  // vertical FOV
 	static SDL_Window* win = NULL;
 	static SDL_GLContext ctx;
 	Obj scene;
