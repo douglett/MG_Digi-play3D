@@ -26,6 +26,7 @@ int start_asteroids() {
 			auto obj = d3d::makecube();
 			obj.id = "asteroid";
 			obj.col = {1.0, 0, 0, 1.0};
+			obj.scale = 0.8;
 			obj.y = 5 + i*1.5;
 			obj.x = (i%6) - 3;
 			scene.children.push_back(obj);
@@ -90,7 +91,7 @@ int mainloop() {
 			// collision
 			for (auto& a : d3d::scene.children) {
 				if (a.id != "asteroid")  continue;
-				if (dist(a, b) < float(0.5 + 0.5*0.3))  a.id = b.id = "dead";
+				if (dist(a, b) < float(a.scale/2 + b.scale/2))  a.id = b.id = "dead";
 			}
 		}
 
