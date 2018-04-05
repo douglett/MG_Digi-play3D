@@ -27,7 +27,7 @@ int start_asteroids() {
 			obj.id = "asteroid";
 			obj.col = {1.0, 0, 0, 1.0};
 			obj.scale = 0.8;
-			obj.y = 5 + i*1.5;
+			obj.y = 10 + i*1.5;
 			obj.x = (i%6) - 3;
 			scene.children.push_back(obj);
 		}
@@ -74,6 +74,7 @@ int mainloop() {
 						case SDLK_LEFT:   kleft  = kdown;  break;
 						case SDLK_RIGHT:  kright = kdown;  break;
 						case SDLK_SPACE:  kfire  = kdown;  break;
+						case 'r':  break;
 					}
 				}
 				break;
@@ -98,7 +99,8 @@ int mainloop() {
 		// remove offscreen
 		for (auto& o : d3d::scene.children) {
 			if (o.id.substr(0,6) == "camera")  continue;
-			if (dist(*ship, o) > 15.0) { o.id = "dead";  continue; }
+			else if (o.id == "bullet") { if (dist(*ship, o) > 15.0) o.id = "dead"; }
+			else if (o.id == "asteroid") { if (o.y - ship->y < -2) o.id = "dead"; }
 		}
 		
 		{ // clear dead

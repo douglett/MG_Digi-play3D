@@ -1,5 +1,6 @@
 #include "d3d.h"
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 namespace d3d {
@@ -54,8 +55,18 @@ namespace d3d {
 			p.x += x, p.y += y, p.z += z;
 	}
 	
+	// helpers
+	
+	float dist(const Obj& a, const Obj& b) {
+		return sqrt( pow(b.y-a.y, 2) + pow(b.x-a.x, 2) );
+	}
+	
 	int intersects(const Obj& a, const Obj& b) {
-		return 0;
+		//return ( dist(a, b) < (a.scale + b.scale)/2 );  // method 1 - circular
+		if (a.x+a.scale/2 < b.x-b.scale/2 || a.x-a.scale/2 > b.x+b.scale/2)  return 0;  // method 2 - box
+		if (a.y+a.scale/2 < b.y-b.scale/2 || a.y-a.scale/2 > b.y+b.scale/2)  return 0;
+		if (a.z+a.scale/2 < b.z-b.scale/2 || a.z-a.scale/2 > b.z+b.scale/2)  return 0;
+		return 1;
 	}
 	
 } // end d3d

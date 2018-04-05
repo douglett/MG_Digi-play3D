@@ -19,18 +19,19 @@ namespace d3d {
 	// main
 	extern Obj scene;
 	extern std::string cameraid;
-	int  init();
-	int  quit();
-	int  flip();
-	int  clearscene();
-	int  setPerspective(const std::string& perspective);
-	int  paint();
-	Obj* getbyid(const std::string& id);
-	Obj* getbyid(Obj& root, const std::string& id);
+	int   init();
+	int   quit();
+	int   flip();
+	int   clearscene();
+	int   setPerspective(const std::string& perspective);
+	int   paint();
+	Obj*  getbyid(const std::string& id);
+	Obj*  getbyid(Obj& root, const std::string& id);
 	// buildobj
-	Obj  makecamera();
-	Obj  makecube();
-	void scale(std::list<gquad>& quads, float scalef);
-	void translate(std::list<gquad>& quads, float x, float y, float z);
-	int  intersects(const Obj& a, const Obj& b);
+	Obj   makecamera();
+	Obj   makecube();
+	void  scale(std::list<gquad>& quads, float scalef);
+	void  translate(std::list<gquad>& quads, float x, float y, float z);
+	float dist(const Obj& a, const Obj& b);
+	int   intersects(const Obj& a, const Obj& b);
 } // end d3d
