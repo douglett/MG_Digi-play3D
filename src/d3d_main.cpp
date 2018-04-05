@@ -37,6 +37,7 @@ namespace d3d {
 		glEnable(GL_DEPTH_TEST),  glDepthFunc(GL_LESS);  // stuff in background
 		glEnable(GL_BLEND),       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  // transparency
 		glEnable(GL_TEXTURE_2D);  // allow textures
+		//SDL_GL_SetSwapInterval(1);  // vsync on
 		// set some defaults
 		glClearColor(0.0, 0.0, 0.0, 1.0);
 		glShadeModel(GL_SMOOTH);
