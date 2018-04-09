@@ -5,7 +5,6 @@ using namespace std;
 
 int   mainloop();
 int   mkbullet(float x, float y);
-float dist(const d3d::Obj& a, const d3d::Obj& b);
 
 int start_asteroids() {
 	// make scene
@@ -42,7 +41,7 @@ int mainloop() {
 	const float 
 		HERTZ            = 60.0,
 		SPEED_SCENE      = 2.0/HERTZ,  // m/s
-		SPEED_SHIP       = 2.0/HERTZ, 
+		SPEED_SHIP       = 2.5/HERTZ, 
 		SPEED_BULLET     = 8.0/HERTZ,
 		SPEED_BULLETROT  = 1.0/HERTZ;  // rot/s ?
 	// game vars
@@ -130,9 +129,5 @@ int mkbullet(float x, float y) {
 	obj.y = y;
 	d3d::scene.children.push_back(obj);
 	return 0;
-}
-
-float dist(const d3d::Obj& a, const d3d::Obj& b) {
-	return sqrt( pow(b.y-a.y, 2) + pow(b.x-a.x, 2) );
 }
 
