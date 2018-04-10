@@ -18,17 +18,13 @@ namespace d3d {
 	
 	int init() {
 		// init sdl2
-		if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-			fprintf(stderr, "Failed to init SDL2\n");
-			return 1;
-		}
+		if (SDL_Init(SDL_INIT_VIDEO) < 0) 
+			return fprintf(stderr, "Failed to init SDL2\n"), 1;
 		// Create our window centered at 512x512 resolution
 		const int  C = SDL_WINDOWPOS_CENTERED;
 		win = SDL_CreateWindow( "Digi-play 3D", C, C, WIN_W, WIN_H, SDL_WINDOW_OPENGL );
-		if (!win) {
-			fprintf(stderr, "Failed to open SDL2 window\n");
-			return 1;
-		}
+		if (!win) 
+			return fprintf(stderr, "Failed to open SDL2 window\n"), 1;
 		
 		// set GL window attributes
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
@@ -44,11 +40,8 @@ namespace d3d {
 		glShadeModel(GL_SMOOTH);
 		// simple opengl error checking
 		GLenum error = glGetError();
-		if (error != GL_NO_ERROR) {
-			fprintf(stderr, "Error initialising OpenGL! %s\n", gluErrorString(error));
-			//fprintf(stderr, "Error initialising OpenGL! %d\n", error);
-			return 1;
-		}
+		if (error != GL_NO_ERROR) 
+			return fprintf(stderr, "Error initialising OpenGL! %s\n", gluErrorString(error)), 1;
 		// setup default scene
 		clearscene();
 		auto cube = buildcube();
@@ -115,7 +108,6 @@ namespace d3d {
 		}
 		// repaint 3d objects
 		glPushMatrix();
-			//paintobj(scene);
 			for (const auto& c : scene.children)
 				paintobj( c );
 			//if (showcam)  paintobjs(camlist);
