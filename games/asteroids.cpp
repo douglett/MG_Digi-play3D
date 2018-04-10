@@ -1,4 +1,4 @@
-#include "d3d.h"
+#include "../src/d3d.h"
 #include <iostream>
 #include <cmath>
 using namespace std;
