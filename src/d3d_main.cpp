@@ -37,6 +37,7 @@ namespace d3d {
 		glEnable(GL_DEPTH_TEST),  glDepthFunc(GL_LESS);  // stuff in background
 		glEnable(GL_BLEND),       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  // transparency
 		glEnable(GL_TEXTURE_2D);  // allow textures
+		//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);  // replace base color with texture
 		//SDL_GL_SetSwapInterval(1);  // vsync on
 		// set some defaults
 		glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -50,6 +51,11 @@ namespace d3d {
 		}
 		// setup default scene
 		clearscene();
+		auto cube = buildcube();
+		cube.z = -3;
+		cube.yaw = 30;
+		cube.color = { 1.0, 0, 0, 1.0 };
+		scene.children.push_back(cube);
 		//SDL_Delay(2000);
 		return 0;
 	}
@@ -114,7 +120,11 @@ namespace d3d {
 				paintobj( c );
 			//if (showcam)  paintobjs(camlist);
 		glPopMatrix();
-		// flip
+		return 0;
+	}
+	
+	int paintf() {
+		paint();
 		return flip();
 	}
 	
@@ -126,16 +136,18 @@ namespace d3d {
 			glRotatef    ( obj.pitch,   1,0,0 );
 			glRotatef    ( obj.roll,    0,0,1 );
 			glScalef     ( obj.scale, obj.scale, obj.scale );
-			glColor4f    ( obj.col.x, obj.col.y, obj.col.z, obj.col.a );
+			glColor4f    ( obj.color.x, obj.color.y, obj.color.z, obj.color.a );
+			glBindTexture( GL_TEXTURE_2D, gettexture( obj.texture ) );
 			// draw all quads
 			glBegin(GL_QUADS);
 				for (const auto& q : obj.quads) {
-					glVertex3f( q[0].x,  q[0].y,  q[0].z );
-					glVertex3f( q[1].x,  q[1].y,  q[1].z );
-					glVertex3f( q[2].x,  q[2].y,  q[2].z );
-					glVertex3f( q[3].x,  q[3].y,  q[3].z );
+					glTexCoord2f( 0, 0 );  glVertex3f( q[0].x,  q[0].y,  q[0].z );
+					glTexCoord2f( 0, 1 );  glVertex3f( q[1].x,  q[1].y,  q[1].z );
+					glTexCoord2f( 1, 1 );  glVertex3f( q[2].x,  q[2].y,  q[2].z );
+					glTexCoord2f( 1, 0 );  glVertex3f( q[3].x,  q[3].y,  q[3].z );
 				}
 			glEnd();
+			glBindTexture( GL_TEXTURE_2D, 0 );
 			// draw all children
 			for (const auto& c : obj.children)
 				paintobj( c );

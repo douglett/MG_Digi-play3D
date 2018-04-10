@@ -5,9 +5,9 @@ using namespace std;
 
 namespace d3d {
 
-	Obj makecamera() {
+	Obj buildcamera() {
 		Obj obj;
-		obj.id = "camera", obj.col = {1.0, 1.0, 1.0, 0.7};
+		obj.id = "camera", obj.color = {1.0, 1.0, 1.0, 0.7};
 		gvec3 p[8] = {  // points
 			{-0.3,-0.3,1 }, {-0.3,0.3,1},  {0.3,0.3,1 }, {0.3,-0.3,1 },
 			{-1,-1,-1}, {-1,1,-1}, {1,1,-1}, {1,-1,-1}
@@ -24,9 +24,9 @@ namespace d3d {
 		return obj;
 	}
 
-	Obj makecube() {
+	Obj buildcube() {
 		Obj obj;
-		obj.id = "cube", obj.col = {1.0, 1.0, 1.0, 1.0};
+		obj.id = "cube", obj.color = {1.0, 1.0, 1.0, 1.0};
 		gvec3 p[8] = {  // points
 			{-1,-1,1 }, {-1,1,1},  {1,1,1 }, {1,-1,1 },
 			{-1,-1,-1}, {-1,1,-1}, {1,1,-1}, {1,-1,-1}

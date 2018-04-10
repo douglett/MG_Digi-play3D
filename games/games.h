@@ -1,4 +1,5 @@
 #pragma once
 
 int testscene();
-int start_asteroids();
+int asteroids();
+int texture1();

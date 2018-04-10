@@ -7,19 +7,19 @@ int  mainloop();
 int  mkbullet(float x, float y);
 void resetscene();
 
-int start_asteroids() {
+int asteroids() {
 	printf("asteroids demo. press R to restart.\n");
 	// make scene
 	d3d::clearscene();
 	auto& scene = d3d::scene;
 	{
-		auto cam = d3d::makecamera();
+		auto cam = d3d::buildcamera();
 		cam.z = 10;
 		scene.children.push_back(cam);
 		
-		auto cube = d3d::makecube();
+		auto cube = d3d::buildcube();
 		cube.id = "ship";
-		cube.col = {0, 1.0, 0, 1.0};
+		cube.color = {0, 1.0, 0, 1.0};
 		//cube.z = -3;
 		scene.children.push_back(cube);
 		
@@ -115,9 +115,9 @@ int mainloop() {
 }
 
 int mkbullet(float x, float y) {
-	auto obj = d3d::makecube();
+	auto obj = d3d::buildcube();
 	obj.id = "bullet";
-	obj.col = {1.0, 1.0, 0, 1.0};
+	obj.color = {1.0, 1.0, 0, 1.0};
 	obj.scale = 0.3;
 	obj.x = x;
 	obj.y = y;
@@ -136,9 +136,9 @@ void resetscene() {
 			it++;
 	}
 	// make asteroids
-	auto obj = d3d::makecube();
+	auto obj = d3d::buildcube();
 	obj.id = "asteroid";
-	obj.col = {1.0, 0, 0, 1.0};
+	obj.color = {1.0, 0, 0, 1.0};
 	obj.scale = 0.8;
 	for (int i=0; i<10; i++) {
 		obj.y = 10 + i*1.5;

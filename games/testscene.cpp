@@ -5,13 +5,13 @@ using namespace std;
 int testscene() {
 	d3d::clearscene();
 	{  // make test scene		
-		auto cube = d3d::makecube();
-		cube.col = {0, 1.0, 0, 1.0};
+		auto cube = d3d::buildcube();
+		cube.color = {0, 1.0, 0, 1.0};
 		cube.z = -3;
 		//cube.scale = 0.3;
 		d3d::scene.children.push_back( cube );
 		
-		auto cam = d3d::makecamera();
+		auto cam = d3d::buildcamera();
 		cam.x = 1;
 		cam.y = 1;
 		d3d::scene.children.push_back( cam );
