@@ -3,10 +3,12 @@
 #include <cmath>
 using namespace std;
 
-int   mainloop();
-int   mkbullet(float x, float y);
+int  mainloop();
+int  mkbullet(float x, float y);
+void resetscene();
 
 int start_asteroids() {
+	printf("asteroids demo. press R to restart.\n");
 	// make scene
 	d3d::clearscene();
 	auto& scene = d3d::scene;
@@ -21,15 +23,7 @@ int start_asteroids() {
 		//cube.z = -3;
 		scene.children.push_back(cube);
 		
-		for (int i=0; i<10; i++) {
-			auto obj = d3d::makecube();
-			obj.id = "asteroid";
-			obj.col = {1.0, 0, 0, 1.0};
-			obj.scale = 0.8;
-			obj.y = 10 + i*1.5;
-			obj.x = (i%6) - 3;
-			scene.children.push_back(obj);
-		}
+		resetscene();
 	}
 	// go
 	mainloop();
@@ -41,7 +35,7 @@ int mainloop() {
 	const float 
 		HERTZ            = 60.0,
 		SPEED_SCENE      = 2.0/HERTZ,  // m/s
-		SPEED_SHIP       = 2.5/HERTZ, 
+		SPEED_SHIP       = 2.8/HERTZ, 
 		SPEED_BULLET     = 8.0/HERTZ,
 		SPEED_BULLETROT  = 1.0/HERTZ;  // rot/s ?
 	// game vars
@@ -73,7 +67,7 @@ int mainloop() {
 						case SDLK_LEFT:   kleft  = kdown;  break;
 						case SDLK_RIGHT:  kright = kdown;  break;
 						case SDLK_SPACE:  kfire  = kdown;  break;
-						case 'r':  break;
+						case 'r':  if (kdown) resetscene();  break;
 					}
 				}
 				break;
@@ -129,5 +123,30 @@ int mkbullet(float x, float y) {
 	obj.y = y;
 	d3d::scene.children.push_back(obj);
 	return 0;
+}
+
+void resetscene() {
+	// clear asteroids and bullets from scene
+	auto& objlist = d3d::scene.children;
+	auto  it      = objlist.begin();
+	while (it != objlist.end()) {
+		if (it->id == "asteroid" || it->id == "bullet" || it->id == "dead") 
+			it = objlist.erase(it);
+		else
+			it++;
+	}
+	// make asteroids
+	auto obj = d3d::makecube();
+	obj.id = "asteroid";
+	obj.col = {1.0, 0, 0, 1.0};
+	obj.scale = 0.8;
+	for (int i=0; i<10; i++) {
+		obj.y = 10 + i*1.5;
+		obj.x = (i%6) - 3;
+		objlist.push_back(obj);
+	}
+	// reset ship
+	auto* ship = d3d::getbyid("ship");
+	ship->x = ship->y = 0;
 }
 
