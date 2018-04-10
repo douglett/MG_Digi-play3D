@@ -11,8 +11,9 @@ int texture1() {
 		SDL_FillRect(sf, &r, SDL_MapRGB(sf->format, shade, shade, shade));
 	}
 	d3d::buildtexture("tex1", sf);
+	SDL_FreeSurface(sf);  sf = NULL;
 	d3d::getbyid("cube")->texture = "tex1";
-	//d3d::getbyid("cube")->color = { 1.0, 1.0, 1.0, 1.0 };
+	d3d::getbyid("cube")->color = { 1.0, 0, 0, 1.0 };
 
 	int running = 1;
 	SDL_Event e;
