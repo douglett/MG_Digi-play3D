@@ -8,7 +8,7 @@ int main(int argc, char** argv) {
 	if (d3d::init())  return 1;
 	
 	//testscene();
-	//start_asteroids();
+	//asteroids();
 	texture1();
 	
 	d3d::quit();

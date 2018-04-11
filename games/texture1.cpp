@@ -3,6 +3,7 @@
 using namespace std;
 
 int texture1() {
+	// make our test texture
 	auto* sf = SDL_CreateRGBSurface(0, 256, 256, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
 	for (int i=0; i<64; i++) {
 		SDL_Rect r = { 0, 0, 256, 256 };
@@ -12,8 +13,19 @@ int texture1() {
 	}
 	d3d::buildtexture("tex1", sf);
 	SDL_FreeSurface(sf);  sf = NULL;
-	d3d::getbyid("cube")->texture = "tex1";
-	d3d::getbyid("cube")->color = { 1.0, 0, 0, 1.0 };
+	
+	// texture the default cube
+	d3d::getbyid("cube")->texture = "qbfont";
+	d3d::getbyid("cube")->color = {1, 0, 0, 1};
+	d3d::getbyid("cube")->x = -1;
+	
+	// add and texture a pyramid
+	auto pyr = d3d::buildpyramid();
+	pyr.color = {1, 0, 0, 1};
+	pyr.z = -3;
+	pyr.x = 1;
+	pyr.texture = "tex1";
+	d3d::scene.children.push_back(pyr);
 
 	int running = 1;
 	SDL_Event e;
@@ -25,6 +37,7 @@ int texture1() {
 		}
 		
 		d3d::getbyid("cube")->yaw += 0.01;
+		d3d::getbyid("pyramid")->yaw += 0.01;
 		d3d::paintf();
 	}
 

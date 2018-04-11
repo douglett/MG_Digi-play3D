@@ -43,6 +43,25 @@ namespace d3d {
 		return obj;
 	}
 	
+	Obj buildpyramid() {
+		Obj obj;
+		obj.id = "pyramid";
+		gvec3 p[8] = {  // points
+			{-1,-1,1 }, { 0,1,0}, {0,1,0}, {1,-1,1 },
+			{-1,-1,-1}, { 0,1,0}, {0,1,0}, {1,-1,-1}
+		};
+		obj.quads = {
+			{ p[0], p[1], p[2], p[3] }, // back
+			{ p[4], p[5], p[6], p[7] }, // front
+			{ p[0], p[1], p[5], p[4] }, // left
+			{ p[2], p[3], p[7], p[6] }, // right
+			{ p[1], p[2], p[6], p[5] }, // top
+			{ p[0], p[3], p[7], p[4] }, // bottom
+		};
+		scale(obj.quads, 0.5);
+		return obj;
+	}
+	
 	void scale(std::list<gquad>& quads, float scalef) {
 		for (auto& q : quads)
 		for (auto& p : q)

@@ -33,11 +33,13 @@ namespace d3d {
 	// buildobj
 	Obj   buildcamera();
 	Obj   buildcube();
+	Obj   buildpyramid();
 	void  scale(std::list<gquad>& quads, float scalef);
 	void  translate(std::list<gquad>& quads, float x, float y, float z);
 	float dist(const Obj& a, const Obj& b);
 	int   intersects(const Obj& a, const Obj& b);
 	// textures
+	int      buildqbfont();
 	int      buildtexture(const std::string& id, SDL_Surface* sf);
 	uint32_t gettexture(const std::string& id);
 } // end d3d

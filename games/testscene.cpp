@@ -36,6 +36,7 @@ int testscene() {
 				break;
 		}
 		d3d::paint();
+		d3d::flip();
 		for (auto* obj = d3d::getbyid(d3d::scene, "cube"); obj!=NULL; obj=NULL)
 			obj->pitch += 0.01;
 		for (auto* obj = d3d::getbyid(d3d::scene, "camera"); obj!=NULL; obj=NULL)

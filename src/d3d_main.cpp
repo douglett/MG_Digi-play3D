@@ -42,6 +42,8 @@ namespace d3d {
 		GLenum error = glGetError();
 		if (error != GL_NO_ERROR) 
 			return fprintf(stderr, "Error initialising OpenGL! %s\n", gluErrorString(error)), 1;
+		// default textures
+		buildqbfont();
 		// setup default scene
 		clearscene();
 		auto cube = buildcube();

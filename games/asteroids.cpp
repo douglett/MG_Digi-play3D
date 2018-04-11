@@ -52,7 +52,7 @@ int mainloop() {
 		int ttdelta = SDL_GetTicks()-gametime;
 		if (ttdelta < 1000/HERTZ)  continue;  // short frame
 		gametime += 1000/HERTZ;  // advance
-		if (SDL_GetTicks()-gametime < 1000/HERTZ)  d3d::paint();  // frameskip
+		if (SDL_GetTicks()-gametime < 1000/HERTZ)  d3d::paintf();  // frameskip
 		
 		// events
 		SDL_Event e;
