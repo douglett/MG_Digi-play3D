@@ -39,7 +39,7 @@ namespace d3d {
 	float dist(const Obj& a, const Obj& b);
 	int   intersects(const Obj& a, const Obj& b);
 	// textures
-	int      buildqbfont();
+	SDL_Surface* qbfont();
 	int      buildtexture(const std::string& id, SDL_Surface* sf);
 	uint32_t gettexture(const std::string& id);
 } // end d3d

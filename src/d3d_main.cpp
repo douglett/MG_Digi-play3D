@@ -43,7 +43,7 @@ namespace d3d {
 		if (error != GL_NO_ERROR) 
 			return fprintf(stderr, "Error initialising OpenGL! %s\n", gluErrorString(error)), 1;
 		// default textures
-		buildqbfont();
+		qbfont();  // build font for first time
 		// setup default scene
 		clearscene();
 		auto cube = buildcube();

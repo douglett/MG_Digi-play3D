@@ -11,6 +11,8 @@ int texture1() {
 		int shade = 170-i;
 		SDL_FillRect(sf, &r, SDL_MapRGB(sf->format, shade, shade, shade));
 	}
+	SDL_Rect r = { 0, 0, 30, 30 };
+	SDL_FillRect(sf, &r, SDL_MapRGB(sf->format, 255, 0, 0));
 	d3d::buildtexture("tex1", sf);
 	SDL_FreeSurface(sf);  sf = NULL;
 	

@@ -5,19 +5,20 @@
 #include <vector>
 using namespace std;
 
-
+static void flipsf(SDL_Surface* sf);
 static SDL_Surface* buildfont();
-
 
 namespace d3d {
 
 	static map<string, uint32_t> texlist;
+	static SDL_Surface* qbfontsf = NULL;
 	
-	int buildqbfont() {
-		auto* sf = buildfont();
-		buildtexture("qbfont", sf);
-		SDL_FreeSurface(sf);
-		return 0;
+	SDL_Surface* qbfont() {
+		if (qbfontsf == NULL) {
+			qbfontsf = buildfont();
+			buildtexture("qbfont", qbfontsf);
+		}
+		return qbfontsf;
 	}
 	
 	int buildtexture(const std::string& id, SDL_Surface* sf) {
@@ -28,7 +29,9 @@ namespace d3d {
 		glGenTextures( 1, &texID );
 		glBindTexture( GL_TEXTURE_2D, texID );
 			SDL_LockSurface(sf);
-				glTexImage2D   ( GL_TEXTURE_2D, 0, GL_RGBA, sf->w, sf->h, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8, sf->pixels );
+				flipsf(sf);  // have to flip the damn thing or it comes out backwards
+				glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, sf->w, sf->h, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8, sf->pixels );
+				flipsf(sf);  // and flip back for drawing
 			SDL_UnlockSurface(sf);
 			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );  // simple pixel-perfect scaling
 			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );  // needed?
@@ -46,7 +49,21 @@ namespace d3d {
 } // end d3d
 
 
-static const vector<uint16_t> qbfont = {
+static void flipsf(SDL_Surface* sf) {
+	SDL_LockSurface(sf);
+	uint32_t* data = (uint32_t*) sf->pixels;
+	uint32_t t, *p1, *p2;
+	for (int y=0; y<sf->h/2; y++)
+	for (int x=0; x<sf->w; x++) {
+		p1 = &data[ y * sf->w + x ];
+		p2 = &data[ (sf->h-y-1) * sf->w + x ];
+		t = *p1;  *p1 = *p2;  *p2 = t;  // swap
+	}
+	SDL_UnlockSurface(sf);
+}
+
+
+static const vector<uint16_t> QBFONT_DATA = {
 0x0000,0x0000,0x0000,0x0000,  0x7e81,0xa581,0xbd99,0x817e,
 0x7eff,0xdbff,0xc3e7,0xff7e,  0x6cfe,0xfefe,0x7c38,0x1000,
 0x1038,0x7cfe,0x7c38,0x1000,  0x387c,0x38fe,0xfed6,0x1038,
@@ -183,8 +200,8 @@ static void mkletter(SDL_Surface* sf, int c) {
 	SDL_LockSurface(sf);
 		uint32_t* px = (uint32_t*)sf->pixels;
 		for (int y=0; y<4; y++) {
-			uint8_t a = qbfont[c*4 + y] >> 8;
-			uint8_t b = qbfont[c*4 + y] & 0xffff;
+			uint8_t a = QBFONT_DATA[c*4 + y] >> 8;
+			uint8_t b = QBFONT_DATA[c*4 + y] & 0xffff;
 			for (int x=0; x<8; x++) {
 				px[(y*2  )*8 + x] = ( (a>>(7-x)&1) ? fg : bg );
 				px[(y*2+1)*8 + x] = ( (b>>(7-x)&1) ? fg : bg );
@@ -195,7 +212,14 @@ static void mkletter(SDL_Surface* sf, int c) {
 
 static SDL_Surface* buildfont() {
 	auto* font   = SDL_CreateRGBSurface(0, 128, 128, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
-	auto* letter = SDL_CreateRGBSurface(0, 128, 128, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
+	auto* letter = SDL_CreateRGBSurface(0,   8,   8, 32, 0xff000000, 0xff0000, 0xff00, 0xff);
+	SDL_Rect r = { 0, 0, 8, 8 };
+	for (int c=0; c<256; c++) {
+		mkletter( letter, c );
+		r.x = (c % 16) * 8;
+		r.y = (c / 16) * 8;
+		SDL_BlitSurface( letter, NULL, font, &r );
+	}
 	// OK
 	SDL_FreeSurface(letter);
 	return font;
