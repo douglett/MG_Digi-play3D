@@ -23,10 +23,11 @@ namespace d3d {
 	
 	int buildtexture(const std::string& id, SDL_Surface* sf) {
 		// error checking
-		if (id == "" || texlist.count(id) || sf == NULL)  return 1;
-		// send texture info to gpu
+		if (id == "" || sf == NULL)  return 1;
 		uint32_t texID = 0;  // holds texture id
-		glGenTextures( 1, &texID );
+		if (texlist.count(id))  texID = texlist.at(id);  // update existing texture
+		else  glGenTextures( 1, &texID );  // generate new texture
+		// send texture info to gpu
 		glBindTexture( GL_TEXTURE_2D, texID );
 			SDL_LockSurface(sf);
 				flipsf(sf);  // have to flip the damn thing or it comes out backwards
