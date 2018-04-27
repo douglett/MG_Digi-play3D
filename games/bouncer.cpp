@@ -49,6 +49,7 @@ int bouncer() {
 					case SDLK_DOWN:   keydiry = -1 * kdown;  break;
 					case SDLK_LEFT:   keydirx = -1 * kdown;  break;
 					case SDLK_RIGHT:  keydirx =  1 * kdown;  break;
+					case 'r':  game_level = 0;  nextlevel();  resetguy();  break;
 				}
 				break;
 			}
@@ -62,8 +63,8 @@ int bouncer() {
 			// gravity
 			speedy = max(speedy-0.1, SPEED_MAX*-1.0);
 			for (const auto& o : d3d::scene.children)
-				if      (o.id == "floor" && d3d::intersects( *guy, o ))  speedy = SPEED_MAX;
-				else if (o.id == "goal"  && d3d::intersects( *guy, o ))  nextlevel(), resetguy();
+				if      (o.id == "floor" && d3d::intersects( *guy, o )) { speedy = SPEED_MAX;  break; }
+				else if (o.id == "goal"  && d3d::intersects( *guy, o )) { nextlevel(); resetguy();  break; }
 			guy->y += speedy/60.0;
 			// reset on drop
 			if (guy->y < -15)  resetguy();
@@ -113,6 +114,29 @@ int nextlevel() {
 		goal.z = 6*-5;
 		objlist.push_back( goal );
 		return 0;
+	}
+	else if (game_level == 2) {
+		for (int i=0; i<3; i++) {
+			floor.z = i * -7;
+			floor.y = i * 3;
+			objlist.push_back( floor );
+		}
+		goal.z = 3 * -7;
+		goal.y = 3 * 3;
+		objlist.push_back( goal );
+		return 0;
+	}
+	else if (game_level == 3) {
+		for (int i=0; i<10; i++)
+		for (int x=0; x<3; x++) {
+			floor.z = i * -2;
+			floor.y = i * 2;
+			floor.x = (x - 1) * 2;
+			floor.color.x = floor.color.y = ( i % 2 ? 0.3 : 0.2 );
+			objlist.push_back( floor );
+		}
+		goal.z = 10 * -2,  goal.y = 0;
+		objlist.push_back( goal );
 	}
 	// unknown level
 	objlist.push_back( floor );
