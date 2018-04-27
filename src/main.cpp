@@ -9,7 +9,8 @@ int main(int argc, char** argv) {
 	
 	//testscene();
 	//asteroids();
-	texture1();
+	//texture1();
+	bouncer();
 	
 	d3d::quit();
 	return 0;
