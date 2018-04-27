@@ -38,6 +38,7 @@ namespace d3d {
 	void  translate(std::list<gquad>& quads, float x, float y, float z);
 	float dist(const Obj& a, const Obj& b);
 	int   intersects(const Obj& a, const Obj& b);
+	void  moverelative(Obj& o, float x, float y, float z);
 	// textures
 	SDL_Surface* qbfont();
 	int      buildtexture(const std::string& id, SDL_Surface* sf);

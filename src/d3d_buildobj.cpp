@@ -88,4 +88,8 @@ namespace d3d {
 		return 1;
 	}
 	
+	void moverelative(Obj& o, float x, float y, float z) {
+		// apply roll, pitch, yaw of object then move
+	}
+	
 } // end d3d
